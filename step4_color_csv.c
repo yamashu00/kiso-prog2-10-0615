@@ -21,7 +21,7 @@ int main(void) {
 
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7 && r >= 50) {
             printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
                    name, hue, sat, bri, cx, cy, r);
         }
@@ -34,3 +34,11 @@ int main(void) {
 
 // 【確認】color.csv に1行追加したら、出力はどう変わる？
 // 【改造】半径が 50 以上の行だけ表示するように変えてみよう
+//
+// 答え:
+// color.csv に新しいデータを1行追加すると、
+// その行も読み込まれて出力に1行追加される。
+//
+// このプログラムでは条件に r >= 50 を加えたので、
+// 追加した行の半径が 50 以上なら表示され、
+// 50 未満なら表示されない。

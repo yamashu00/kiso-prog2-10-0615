@@ -12,11 +12,15 @@ int main(void) {
     }
 
     char line[256];
+    int count = 0;
 
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
         printf("%s", line);
+        count++;
     }
+
+    printf("全部で %d 行\n", count);
 
     fclose(fp);
     fp = NULL;
@@ -25,3 +29,8 @@ int main(void) {
 
 // 【確認】step1 と比べて何が変わった？
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
+//
+// 答え:
+// step1 は fgets を1回だけ呼んでいたので、1行しか読まなかった。
+// step2 は while 文の中で fgets を何度も呼び、
+// NULL が返るまで全行を順番に読めるようになった。
