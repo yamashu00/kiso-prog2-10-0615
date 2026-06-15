@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 int main(void) {
+    int sum = 0;
     FILE *fp = fopen("color.csv", "r");
     if (fp == NULL) {
         fprintf(stderr, "ファイルを開けませんでした\n");
@@ -16,7 +17,10 @@ int main(void) {
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
         printf("%s", line);
+        sum++;
     }
+
+    printf("全部で%d行\n", sum);
 
     fclose(fp);
     fp = NULL;
