@@ -22,8 +22,12 @@ int main(void) {
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
                    name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
-                   name, hue, sat, bri, cx, cy, r);
+
+            // 半径が50以上の行だけ表示する
+            if (r >= 50) {
+                printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
+                       name, hue, sat, bri, cx, cy, r);
+            }
         }
     }
 
@@ -33,4 +37,8 @@ int main(void) {
 }
 
 // 【確認】color.csv に1行追加したら、出力はどう変わる？
-// 【改造】半径が 50 以上の行だけ表示するように変えてみよう
+
+// color.csv にデータ行を1行追加すると、出力も1行増える。
+// 理由は、while 文で color.csv の2行目以降を最後まで読み込んでいるから。
+// ただし、1行目はヘッダとして fgets で読み飛ばしているので表示されない。
+// 追加した行が sscanf で正しく7個読み取れた場合だけ、printf で表示される。

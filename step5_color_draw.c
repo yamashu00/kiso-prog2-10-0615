@@ -9,7 +9,6 @@ int main(void) {
     InitWindow(800, 600, "color.csv を描く");
     SetTargetFPS(60);
 
-    // ── color.csv を読み込む ──────────────────────────
     FILE *fp = fopen("color.csv", "r");
     if (fp == NULL) {
         fprintf(stderr, "color.csv が見つかりません\n");
@@ -21,8 +20,12 @@ int main(void) {
     float hue, sat, bri;
     int   cx, cy, r;
 
-    float hues[64]; float sats[64]; float bris[64];
-    int   cxs[64];  int   cys[64];  int   rs[64];
+    float hues[64];
+    float sats[64];
+    float bris[64];
+    int   cxs[64];
+    int   cys[64];
+    int   rs[64];
     int   count = 0;
 
     fgets(line, sizeof(line), fp);   // ヘッダを読み飛ばす
@@ -30,21 +33,24 @@ int main(void) {
     while (fgets(line, sizeof(line), fp) != NULL && count < 64) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
                    name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            hues[count] = hue;  sats[count] = sat;  bris[count] = bri;
-            cxs[count]  = cx;   cys[count]  = cy;   rs[count]   = r;
+            hues[count] = hue;
+            sats[count] = sat;
+            bris[count] = bri;
+            cxs[count]  = cx;
+            cys[count]  = cy;
+            rs[count]   = r;
             count++;
         }
     }
+
     fclose(fp);
     fp = NULL;
 
-    // ── 描画ループ ────────────────────────────────────
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
 
         for (int i = 0; i < count; i++) {
-            // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
             Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
             DrawCircle(cxs[i], cys[i], (float)rs[i], col);
         }
@@ -59,4 +65,18 @@ int main(void) {
 }
 
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
-// 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう
+
+// color.csv に行を追加すると、画面に描かれる円が増える。
+// このプログラムは color.csv の2行目以降を読み込んで、
+// 1行につき1つの円を描いているから。
+
+// 例えば color.csv に次のような行を追加する。
+
+夜空 ブルー,230,80,70,150,150,60
+夕焼け オレンジ,30,90,95,400,300,100
+草原 グリーン,120,70,80,650,420,80
+月 イエロー,55,30,95,600,120,50
+
+// すると、それぞれの色・位置・半径に合わせて円が描かれる。
+// cx, cy は円の中心の座標で、r は半径。
+// hue, sat, bri は色を決める値。
