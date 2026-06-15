@@ -24,6 +24,7 @@ int main(void) {
     if (fp2 == NULL) { return 1; }
 
     fprintf(fp2, "ログ: %s", line);
+    fclose(fp2);
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
     if (fp3 == NULL){
