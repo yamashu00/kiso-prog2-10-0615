@@ -3,7 +3,8 @@
 // 実行:       ./step5
 
 #include <stdio.h>
-#include "raylib.h"
+#include <raylib.h>
+
 
 int main(void) {
     InitWindow(800, 600, "color.csv を描く");

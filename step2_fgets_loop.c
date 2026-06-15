@@ -12,16 +12,19 @@ int main(void) {
     }
 
     char line[256];
-
+    
+    int i = 0;
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
         printf("%s", line);
+        i++;
     }
+    printf("全部で %d 行",i);
 
     fclose(fp);
     fp = NULL;
     return 0;
 }
 
-// 【確認】step1 と比べて何が変わった？
+// 【確認】step1 と比べて何が変わった？　step1は１行しか読んでいないのが、ファイルの最後まで繰り返し読み込めるようになった。
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
