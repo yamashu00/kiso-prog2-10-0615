@@ -21,8 +21,10 @@ int main(void) {
     fp = NULL;
 
     FILE *fp2 = fopen("log.txt", "w");
-    if (fp2 == NULL) { return 1; }
-
+    if (fp2 == NULL) { 
+        fprintf (stderr, "ファイルが開けません\n");
+    return 1;
+    }
     fprintf(fp2, "ログ: %s", line);
     fclose(fp2);
 
@@ -32,8 +34,6 @@ int main(void) {
         return 1;
     }
     fprintf(fp3, "data\n");
-    
-    
     fclose(fp3);
 
     return 0;
