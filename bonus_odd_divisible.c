@@ -36,7 +36,11 @@
 
 int main(void) {
 
-    /* ここに実装する */
+    for (int a = 3; a <= 9999; a += 2) {
+        if ((a * a - a) % 10000 == 0) {
+            printf("%d\n", a);
+        }
+    }
 
     return 0;
 }
