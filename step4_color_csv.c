@@ -21,7 +21,7 @@ int main(void) {
 
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7 && r >=50) {
             printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
                    name, hue, sat, bri, cx, cy, r);
         }
@@ -33,4 +33,13 @@ int main(void) {
 }
 
 // 【確認】color.csv に1行追加したら、出力はどう変わる？
+/*　夕焼け オレンジ: HSB(30, 90, 95) @ (400,300) r=80
+澄んだ 空色: HSB(200, 85, 85) @ (150,200) r=55
+森の緑: HSB(120, 70, 80) @ (600,350) r=40
+薄い桃色: HSB(350, 50, 98) @ (500,150) r=30
+紫の霞: HSB(280, 60, 75) @ (300,450) r=50
+紅葉: HSB(0, 90, 70) @ (250,200) r=70
+
+追加した欄が追記された
+*/
 // 【改造】半径が 50 以上の行だけ表示するように変えてみよう
