@@ -11,18 +11,27 @@ int main(void) {
 
     char line[256];
     fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
+    if(fp == NULL){
+        fprintf(stderr, "ファイルを開けませんでした\n");
+    }
     printf("%s", line);
 
+    fclose(fp);
     fp = NULL;                        // バグ② ファイルを閉じていない
-
     FILE *fp2 = fopen("log.txt", "w");
-    if (fp2 == NULL) { return 1; }
-
+    if (fp2 == NULL) {
+        fprintf(stderr, "log.txtを開けませんでした\n");
+        return 1;
+    }
     fprintf(fp2, "ログ: %s", line);
     fclose(fp2);
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
-    fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
+    if (fp3 == NULL) {
+        fprintf(stderr, "開けません\n");
+        return 1;
+    }
+    fprintf(fp3, "data\n");
     fclose(fp3);
 
     return 0;
