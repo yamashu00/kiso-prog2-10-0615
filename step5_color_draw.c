@@ -46,7 +46,7 @@ int main(void) {
         for (int i = 0; i < count; i++) {
             // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
             Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
-            DrawCircle(cxs[i], cys[i], (float)rs[i], col);
+            DrawRectangle(cxs[i] - (rs[i] / 2), cys[i] - (rs[i] / 2), (float)rs[i], (float)rs[i], col);
         }
 
         DrawText("color.csv を書き換えると絵が変わる", 10, 10, 16, LIGHTGRAY);
@@ -59,4 +59,10 @@ int main(void) {
 }
 
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
+
+//パンケーキのような絵に改造。
+
 // 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう
+
+//DrawCircleをDrawRectangleにして、描画座標をx, yそれぞれをrs[i]/2引くと、四角いパンケーキが完成。
+//rs[i]/2を引く理由は、四角形にしても中心を円の時と等しくするため。
