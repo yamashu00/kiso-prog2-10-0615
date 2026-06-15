@@ -42,14 +42,17 @@ int main(void) {
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
+        DrawRectangle(250, 200, 300, 200, WHITE);
 
         for (int i = 0; i < count; i++) {
+
             // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
             Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
             DrawCircle(cxs[i], cys[i], (float)rs[i], col);
         }
 
         DrawText("color.csv を書き換えると絵が変わる", 10, 10, 16, LIGHTGRAY);
+
 
         EndDrawing();
     }
