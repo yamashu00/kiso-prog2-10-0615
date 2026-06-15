@@ -4,17 +4,19 @@
 
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "ファイルを開けませんでした\n");
         return 1;
     }
 
-    char line[256];   // 1行分のバッファ（256文字まで）
+    char line[256]; // 1行分のバッファ（256文字まで）
 
-    fgets(line, sizeof(line), fp);   // 1行だけ読む
-    printf("%s", line);              // そのまま表示
+    fgets(line, sizeof(line), fp); // 1行だけ読む
+    printf("%s", line);            // そのまま表示
 
     fclose(fp);
     fp = NULL;
@@ -22,3 +24,4 @@ int main(void) {
 }
 
 // 【確認】実行するとどの行が出る？ なぜ1行しか出ない？
+// 最初の項目が書かれている行。「表示する」というコマンドを一度だけ置いただけであって、ループではないので、1行しか出ない

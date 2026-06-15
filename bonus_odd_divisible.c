@@ -34,9 +34,33 @@
 
 #include <stdio.h>
 
-int main(void) {
-
-    /* ここに実装する */
+int main(void)
+{
+    int a;
+    int b[10000];
+    int i = 0;
+    /*  問題: 3 以上 9999 以下の奇数 a で、a^2 - a が 10000 で割り切れるものを全て求めよ。 */
+    for (a = 3; a <= 9999; a++)
+    {
+        if ((a * a - a) % 10000 == 0)
+        {
+            b[a - 3] = a;
+        }
+        else
+        {
+            b[a - 3] = 0;
+        }
+    }
+    printf("owaowari\n"); // 　終わった合図
+    while (i < 10000)
+    {
+        if (b[i] != 0)
+        {
+            printf("%d\n", b[i]);
+        }
+        i++;
+    }
+    printf("owari\n"); // 　終わった合図2
 
     return 0;
 }
