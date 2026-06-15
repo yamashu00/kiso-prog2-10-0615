@@ -22,8 +22,12 @@ int main(void) {
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
                    name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
+                    if(r < 50){
+                        continue;
+                    } else {
+                        printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
                    name, hue, sat, bri, cx, cy, r);
+                    }
         }
     }
 
@@ -33,4 +37,6 @@ int main(void) {
 }
 
 // 【確認】color.csv に1行追加したら、出力はどう変わる？
+//　>>追加した行が出力された(1行下に追加された)
 // 【改造】半径が 50 以上の行だけ表示するように変えてみよう
+//　>>r < 50の行をcontinueで飛ばすように変更したら夕焼けオレンジ、澄んだ空色、紫の霞、雲の灰色(追加したやつ)のみ表示された

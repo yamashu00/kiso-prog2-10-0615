@@ -11,8 +11,13 @@ int main(void) {
 
     char line[256];
     fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
+    if(fp == NULL){
+        fprintf(stderr, "エラー\n");
+        return 1;
+    }
     printf("%s", line);
 
+    fclose(fp);
     fp = NULL;                        // バグ② ファイルを閉じていない
 
     FILE *fp2 = fopen("log.txt", "w");
@@ -22,6 +27,10 @@ int main(void) {
     fclose(fp2);
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+    if (fp3 == NULL){
+        fprintf(stderr, "エラー\n");
+        return 1;
+    }
     fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
     fclose(fp3);
 
