@@ -9,19 +9,34 @@
 int main(void) {
     FILE *fp = fopen("color.csv", "r");
 
+    if (fp == NULL) {
+        fprintf(stderr, "color.csv を開けません\n");
+        return 1;
+    }
+
     char line[256];
     fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
     printf("%s", line);
 
+    fclose(fp);
     fp = NULL;                        // バグ② ファイルを閉じていない
 
     FILE *fp2 = fopen("log.txt", "w");
-    if (fp2 == NULL) { return 1; }
+
+    if (fp2 == NULL) {
+        return 1;
+    }
 
     fprintf(fp2, "ログ: %s", line);
     fclose(fp2);
-
+    
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+
+    if (fp3 == NULL) {
+        fprintf(stderr, "開けません\n");
+        return 1;
+    }
+
     fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
     fclose(fp3);
 
@@ -30,11 +45,30 @@ int main(void) {
 
 /*
  * バグの答えはここに書く（スペースを開けてから確認すること）
+ *FILE *fp = fopen("color.csv", "r");
+
+    if (fp == NULL) {
+        fprintf(stderr, "color.csv を開けません\n");
+        return 1;
+    }
+
+    char line[256];
+    fgets(line, sizeof(line), fp);
+    printf("%s", line);
+
  *
+ *fclose(fp);
+    fp = NULL;  
  *
- *
- *
- *
+ *FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+
+    if (fp3 == NULL) {
+        fprintf(stderr, "開けません\n");
+        return 1;
+    }
+
+    fprintf(fp3, "data\n");
+    fclose(fp3);
  *
  * ① fopen 直後に NULLチェックがない → fp が NULL のまま fgets を呼ぶとクラッシュ
  *    修正: if (fp == NULL) { fprintf(stderr, "開けません\n"); return 1; }
