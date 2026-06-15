@@ -1,4 +1,4 @@
-// step5: color.csv を読んで raylib で円を描く（完成版）
+// step5: color.csv を読んで ranlib で円を描く（完成版）
 // コンパイル: gcc step5_color_draw.c -o step5 -lraylib -lm
 // 実行:       ./step5
 
@@ -58,5 +58,10 @@ int main(void) {
     return 0;
 }
 
+//実行方法
+// cd /Users/ooshitaatsushinin/kiso-prog2-10-0615
+// gcc step5_color_draw.c -o step5_color_draw -lraylib -lm
+// ./step5_color_draw
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
+
 // 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう

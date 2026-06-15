@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/ooshitaatsushinin/kiso-prog2-10-0615/step0_debug_quiz'
+relocations:     []
+...
