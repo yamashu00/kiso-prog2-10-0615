@@ -59,4 +59,6 @@ int main(void) {
 }
 
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
+//🐸作りました
 // 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう
+//もう一つファイル作りました（step5_color_draw1.c）です。

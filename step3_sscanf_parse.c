@@ -6,7 +6,7 @@
 
 int main(void) {
     // color.csv の2行目と同じ形式の文字列
-    char line[] = "夕焼け オレンジ,30,90,95,400,300,80";
+    char line[] = "GAL ピンク,30,90,95,400,300,80";
 
     char  name[64];
     float hue, sat, bri;
@@ -28,4 +28,5 @@ int main(void) {
 }
 
 // 【確認】n は何？ なぜその数になる？
+//n は sscanf() が正常に読み込めたデータの個数を表す。
 // 【改造】line の中身を変えて、別の色を試してみよう
