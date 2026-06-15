@@ -36,7 +36,14 @@
 
 int main(void) {
 
-    /* ここに実装する */
+    int a = 3;
+    
+    while(a <= 9999){
+        if((a*a - a) % 10000 == 0){
+            printf("%d\n", a);
+        }
+        a += 2;
+    }
 
     return 0;
 }
