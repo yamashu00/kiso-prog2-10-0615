@@ -87,8 +87,8 @@ gcc step3_sscanf_parse.c -o step3
 gcc step4_color_csv.c -o step4
 ./step4
 
-# step5 は raylib が必要（-lraylib -lm をつける）
-gcc step5_color_draw.c -o step5 -lraylib -lm
+# step5 は raylib が必要
+gcc step5_color_draw.c -o step5 -I/opt/homebrew/include -L/opt/homebrew/lib -lraylib -lm
 ./step5
 
 # bonus
