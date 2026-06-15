@@ -35,8 +35,13 @@
 #include <stdio.h>
 
 int main(void) {
-
-    /* ここに実装する */
+    int n=100;
+    for(n=100;n<9999;n=n+5){
+       if((n*n-n)%10000==0){
+        printf("%d\n",n);
+       }
+    }
+            
 
     return 0;
 }
