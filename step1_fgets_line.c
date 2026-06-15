@@ -4,17 +4,25 @@
 
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "ファイルを開けませんでした\n");
         return 1;
     }
 
-    char line[256];   // 1行分のバッファ（256文字まで）
+    char line[256];
+    // char b[256];
+    // char c[256]; // 1行分のバッファ（256文字まで）
 
-    fgets(line, sizeof(line), fp);   // 1行だけ読む
-    printf("%s", line);              // そのまま表示
+    fgets(line, sizeof(line), fp);
+    // fgets(b, sizeof(b), fp);
+    // fgets(c, sizeof(c), fp);      // 1行だけ読む
+    // printf("%s%s%s", line, b, c); // そのまま表示
+
+    printf("%s", line);
 
     fclose(fp);
     fp = NULL;
@@ -22,3 +30,4 @@ int main(void) {
 }
 
 // 【確認】実行するとどの行が出る？ なぜ1行しか出ない？
+// fgets()を一回しか実行してないから

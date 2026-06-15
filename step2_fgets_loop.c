@@ -4,9 +4,11 @@
 
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "ファイルを開けませんでした\n");
         return 1;
     }
@@ -14,9 +16,14 @@ int main(void) {
     char line[256];
 
     // fgets が NULL を返したらファイルの終わり
-    while (fgets(line, sizeof(line), fp) != NULL) {
+    int n = 0;
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
         printf("%s", line);
+        n++;
     }
+
+    printf("全部で%d行\n", n);
 
     fclose(fp);
     fp = NULL;
@@ -24,4 +31,6 @@ int main(void) {
 }
 
 // 【確認】step1 と比べて何が変わった？
+// 　NULLが返されるまで繰り返しprintfしてるからcolorに入ってるのが全文表示される！
+// 　step1では1行しか読まなかったが、step2ではwhile文でfgetsを繰り返しているため、ファイル全体を表示できる
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
