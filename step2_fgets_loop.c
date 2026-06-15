@@ -12,7 +12,7 @@ int main(void) {
     }
 
     char line[256];
-    int count;
+    int count = 0;
 
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
