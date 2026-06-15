@@ -1,37 +1,50 @@
-// step5: color.csv を読んで raylib で円を描く（完成版）
-// コンパイル: gcc step5_color_draw.c -o step5 -lraylib -lm
+// step5: color.csv を読んで raylib で円を描き、四角形も表示する（発展版）
+// コンパイル（Mac/Homebrew）:
+// gcc step5_color_draw.c -o step5 -I/opt/homebrew/opt/raylib/include -L/opt/homebrew/opt/raylib/lib -lraylib -lm
 // 実行:       ./step5
 
 #include <stdio.h>
 #include "raylib.h"
 
-int main(void) {
+int main(void)
+{
     InitWindow(800, 600, "color.csv を描く");
     SetTargetFPS(60);
 
     // ── color.csv を読み込む ──────────────────────────
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "color.csv が見つかりません\n");
         return 1;
     }
 
-    char  line[256];
-    char  name[64];
+    char line[256];
+    char name[64];
     float hue, sat, bri;
-    int   cx, cy, r;
+    int cx, cy, r;
 
-    float hues[64]; float sats[64]; float bris[64];
-    int   cxs[64];  int   cys[64];  int   rs[64];
-    int   count = 0;
+    float hues[64];
+    float sats[64];
+    float bris[64];
+    int cxs[64];
+    int cys[64];
+    int rs[64];
+    int count = 0;
 
-    fgets(line, sizeof(line), fp);   // ヘッダを読み飛ばす
+    fgets(line, sizeof(line), fp); // ヘッダを読み飛ばす
 
-    while (fgets(line, sizeof(line), fp) != NULL && count < 64) {
+    while (fgets(line, sizeof(line), fp) != NULL && count < 64)
+    {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            hues[count] = hue;  sats[count] = sat;  bris[count] = bri;
-            cxs[count]  = cx;   cys[count]  = cy;   rs[count]   = r;
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7)
+        {
+            hues[count] = hue;
+            sats[count] = sat;
+            bris[count] = bri;
+            cxs[count] = cx;
+            cys[count] = cy;
+            rs[count] = r;
             count++;
         }
     }
@@ -39,17 +52,43 @@ int main(void) {
     fp = NULL;
 
     // ── 描画ループ ────────────────────────────────────
-    while (!WindowShouldClose()) {
+    while (!WindowShouldClose())
+    {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        for (int i = 0; i < count; i++) {
-            // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
-            Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
+        for (int i = 0; i < count; i++)
+        {
+            Color col = ColorFromHSV(
+                hues[i],
+                sats[i] / 100.0f,
+                bris[i] / 100.0f);
+
+            // アンパンマンの顔は元と同じ円で描く
             DrawCircle(cxs[i], cys[i], (float)rs[i], col);
         }
 
-        DrawText("color.csv を書き換えると絵が変わる", 10, 10, 16, LIGHTGRAY);
+        // 四角形の見本（CSV の図形より手前に表示する）
+        DrawRectangle(40, 60, 160, 100, BLUE);
+        DrawRectangleLines(40, 60, 160, 100, WHITE);
+        DrawText("Rectangle", 70, 98, 20, WHITE);
+
+        // 家の本体（四角）
+        DrawRectangle(
+            650,
+            450,
+            100,
+            80,
+            BROWN);
+
+        // 屋根（三角）
+        DrawTriangle(
+            (Vector2){700, 380},
+            (Vector2){640, 450},
+            (Vector2){760, 450},
+            RED);
+
+        DrawText("anpannmann", 10, 10, 16, LIGHTGRAY);
 
         EndDrawing();
     }
