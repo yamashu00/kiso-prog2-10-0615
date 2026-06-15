@@ -34,9 +34,15 @@
 
 #include <stdio.h>
 
-int main(void) {
-
-    /* ここに実装する */
+int main(void)
+{
+    for (int a = 3; a <= 9999; a += 2)
+    {
+        if ((a * (a - 1)) % 10000 == 0)
+        {
+            printf("%d\n", a);
+        }
+    }
 
     return 0;
 }

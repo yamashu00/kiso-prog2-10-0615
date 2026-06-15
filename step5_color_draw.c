@@ -1,62 +1,147 @@
 // step5: color.csv を読んで raylib で円を描く（完成版）
-// コンパイル: gcc step5_color_draw.c -o step5 -lraylib -lm
+// コンパイル: gcc step5_color_draw.c -o step5 $(pkg-config --cflags --libs raylib) -lm
 // 実行:       ./step5
 
 #include <stdio.h>
-#include "raylib.h"
+#include <raylib.h>
 
-int main(void) {
+static void add_unique_codepoints(const char *text, int *all_codepoints, int *all_count)
+{
+    int text_count = 0;
+    int *text_codepoints = LoadCodepoints(text, &text_count);
+
+    for (int i = 0; i < text_count; i++)
+    {
+        int exists = 0;
+        for (int j = 0; j < *all_count; j++)
+        {
+            if (all_codepoints[j] == text_codepoints[i])
+            {
+                exists = 1;
+                break;
+            }
+        }
+        if (!exists)
+        {
+            all_codepoints[*all_count] = text_codepoints[i];
+            (*all_count)++;
+        }
+    }
+
+    UnloadCodepoints(text_codepoints);
+}
+
+int main(void)
+{
     InitWindow(800, 600, "color.csv を描く");
     SetTargetFPS(60);
 
     // ── color.csv を読み込む ──────────────────────────
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "color.csv が見つかりません\n");
         return 1;
     }
 
-    char  line[256];
-    char  name[64];
+    char line[256];
+    char name[64];
+    char names[64][64];
     float hue, sat, bri;
-    int   cx, cy, r;
+    int cx, cy, r;
 
-    float hues[64]; float sats[64]; float bris[64];
-    int   cxs[64];  int   cys[64];  int   rs[64];
-    int   count = 0;
+    float hues[64];
+    float sats[64];
+    float bris[64];
+    int cxs[64];
+    int cys[64];
+    int rs[64];
+    int count = 0;
 
-    fgets(line, sizeof(line), fp);   // ヘッダを読み飛ばす
+    fgets(line, sizeof(line), fp); // ヘッダを読み飛ばす
 
-    while (fgets(line, sizeof(line), fp) != NULL && count < 64) {
+    while (fgets(line, sizeof(line), fp) != NULL && count < 64)
+    {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            hues[count] = hue;  sats[count] = sat;  bris[count] = bri;
-            cxs[count]  = cx;   cys[count]  = cy;   rs[count]   = r;
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7)
+        {
+            snprintf(names[count], sizeof(names[count]), "%s", name);
+            hues[count] = hue;
+            sats[count] = sat;
+            bris[count] = bri;
+            cxs[count] = cx;
+            cys[count] = cy;
+            rs[count] = r;
             count++;
         }
     }
     fclose(fp);
     fp = NULL;
 
+    int all_codepoints[512];
+    int all_count = 0;
+    add_unique_codepoints("color.csv を書き換えると絵が変わる", all_codepoints, &all_count);
+    add_unique_codepoints("円・四角・三角を順番に描画", all_codepoints, &all_count);
+    for (int i = 0; i < count; i++)
+    {
+        add_unique_codepoints(names[i], all_codepoints, &all_count);
+    }
+
+    Font jp_font = LoadFontEx("/Users/sosuke/Library/Fonts/ZenMaruGothic-Regular.ttf", 32, all_codepoints, all_count);
+    if (jp_font.texture.id == 0)
+    {
+        fprintf(stderr, "日本語フォントを読み込めませんでした\n");
+        CloseWindow();
+        return 1;
+    }
+
     // ── 描画ループ ────────────────────────────────────
-    while (!WindowShouldClose()) {
+    while (!WindowShouldClose())
+    {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; i++)
+        {
             // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
             Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
-            DrawCircle(cxs[i], cys[i], (float)rs[i], col);
+
+            if (i % 3 == 0)
+            {
+                DrawCircle(cxs[i], cys[i], (float)rs[i], col);
+            }
+            else if (i % 3 == 1)
+            {
+                DrawRectangle(cxs[i] - rs[i], cys[i] - rs[i], rs[i] * 2, rs[i] * 2, col);
+            }
+            else
+            {
+                Vector2 p1 = {(float)cxs[i], (float)(cys[i] - rs[i])};
+                Vector2 p2 = {(float)(cxs[i] - rs[i]), (float)(cys[i] + rs[i])};
+                Vector2 p3 = {(float)(cxs[i] + rs[i]), (float)(cys[i] + rs[i])};
+                DrawTriangle(p1, p2, p3, col);
+            }
+
+            DrawTextEx(jp_font, names[i], (Vector2){(float)(cxs[i] - rs[i]), (float)(cys[i] + rs[i] + 8)}, 14, 1, RAYWHITE);
         }
 
-        DrawText("color.csv を書き換えると絵が変わる", 10, 10, 16, LIGHTGRAY);
+        DrawTextEx(jp_font, "color.csv を書き換えると絵が変わる", (Vector2){10, 10}, 16, 1, LIGHTGRAY);
+        DrawTextEx(jp_font, "円・四角・三角を順番に描画", (Vector2){10, 32}, 16, 1, LIGHTGRAY);
 
         EndDrawing();
     }
 
+    UnloadFont(jp_font);
     CloseWindow();
     return 0;
 }
+
+/*
+gcc step5_color_draw.c -o step5 $(pkg-config --cflags --libs raylib) -lm
+./step5
+
+で実行
+*/
 
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
 // 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう
