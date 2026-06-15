@@ -60,3 +60,5 @@ int main(void) {
 
 // 【改造】color.csv に行を追加して、自分だけの絵を作ってみよう
 // 【発展】円の代わりに DrawRectangle や DrawTriangle を使ってみよう
+// color.csv に行を足せば円も増える。
+// ほかの図形にしたいときは DrawCircle の部分を変えればよさそう。
