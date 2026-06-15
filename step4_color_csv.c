@@ -21,7 +21,7 @@ int main(void) {
 
     while (fgets(line, sizeof(line), fp) != NULL) {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7 & r >= 50) {
             printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
                    name, hue, sat, bri, cx, cy, r);
         }
