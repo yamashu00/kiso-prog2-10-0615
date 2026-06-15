@@ -4,9 +4,11 @@
 
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "ファイルを開けませんでした\n");
         return 1;
     }
@@ -14,9 +16,14 @@ int main(void) {
     char line[256];
 
     // fgets が NULL を返したらファイルの終わり
-    while (fgets(line, sizeof(line), fp) != NULL) {
+    int x = 0;
+
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
         printf("%s", line);
+        x++;
     }
+    printf("全部で%d行\n", x);
 
     fclose(fp);
     fp = NULL;

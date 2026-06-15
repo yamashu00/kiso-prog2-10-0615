@@ -4,26 +4,33 @@
 
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     FILE *fp = fopen("color.csv", "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         fprintf(stderr, "ファイルを開けませんでした\n");
         return 1;
     }
 
-    char  line[256];
-    char  name[64];
+    char line[256];
+    char name[64];
     float hue, sat, bri;
-    int   cx, cy, r;
+    int cx, cy, r;
 
     // 1行目（ヘッダ）を読み飛ばす
     fgets(line, sizeof(line), fp);
 
-    while (fgets(line, sizeof(line), fp) != NULL) {
+    while (fgets(line, sizeof(line), fp) != NULL)
+    {
         if (sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7) {
-            printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
-                   name, hue, sat, bri, cx, cy, r);
+                   name, &hue, &sat, &bri, &cx, &cy, &r) == 7)
+        {
+            if (r >= 50)
+            {
+                printf("%s: HSB(%.0f, %.0f, %.0f) @ (%d,%d) r=%d\n",
+                       name, hue, sat, bri, cx, cy, r);
+            }
         }
     }
 
