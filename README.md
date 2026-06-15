@@ -121,6 +121,17 @@ step4_color_csv.c:12:5: error: ...
   ファイル名    行番号   ← VS Code でその行にジャンプして確認する
 ```
 
+
+### Homebrew インストール（未導入の場合）
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# raylib インストール
+brew install raylib
+
+# コンパイル
+gcc main.c -o main -lraylib -framework OpenGL -framework Cocoa -framework IOKit
+```
 ---
 
 ## ★ おすすめ外部コンテスト
