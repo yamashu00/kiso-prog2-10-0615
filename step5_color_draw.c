@@ -10,8 +10,7 @@ int main(void)
 {
     InitWindow(800, 600, "color.csv を描く");
     SetTargetFPS(60);
-
-    // ── color.csv を読み込む ──────────────────────────
+    
     FILE *fp = fopen("color.csv", "r");
     if (fp == NULL)
     {
@@ -32,7 +31,7 @@ int main(void)
     int rs[64];
     int count = 0;
 
-    fgets(line, sizeof(line), fp); // ヘッダを読み飛ばす
+    fgets(line, sizeof(line), fp); 
 
     while (fgets(line, sizeof(line), fp) != NULL && count < 64)
     {
@@ -51,7 +50,6 @@ int main(void)
     fclose(fp);
     fp = NULL;
 
-    // ── 描画ループ ────────────────────────────────────
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -64,16 +62,15 @@ int main(void)
                 sats[i] / 100.0f,
                 bris[i] / 100.0f);
 
-            // アンパンマンの顔は元と同じ円で描く
+            
             DrawCircle(cxs[i], cys[i], (float)rs[i], col);
         }
 
-        // 四角形の見本（CSV の図形より手前に表示する）
         DrawRectangle(40, 60, 160, 100, BLUE);
         DrawRectangleLines(40, 60, 160, 100, WHITE);
         DrawText("Rectangle", 70, 98, 20, WHITE);
 
-        // 家の本体（四角）
+        
         DrawRectangle(
             650,
             450,
@@ -81,7 +78,7 @@ int main(void)
             80,
             BROWN);
 
-        // 屋根（三角）
+ 
         DrawTriangle(
             (Vector2){700, 380},
             (Vector2){640, 450},
