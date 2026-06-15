@@ -30,7 +30,14 @@ int main(void) {
 
 /*
  * バグの答えはここに書く（スペースを開けてから確認すること）
- *
+ * if(fp == NULL){
+ * fprintf(stderr, "開けません\n"); return 1;}
+ * }
+ * 
+ * 2 fcloseの後にfp = NULL;
+ * 3if(fp3 == NULL){
+ *  fprintf(stderr, "開けません\n"); return 1;}
+ * }
  *
  *
  *

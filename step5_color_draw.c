@@ -46,7 +46,10 @@ int main(void) {
         for (int i = 0; i < count; i++) {
             // ColorFromHSV: 色相 0-360、彩度 0-1、明度 0-1
             Color col = ColorFromHSV(hues[i], sats[i] / 100.0f, bris[i] / 100.0f);
-            DrawCircle(cxs[i], cys[i], (float)rs[i], col);
+            Vector2 p1 = { cxs[i], cys[i] - rs[i] };
+            Vector2 p2 = { cxs[i] - rs[i], cys[i] + rs[i] };
+            Vector2 p3 = { cxs[i] + rs[i], cys[i] + rs[i] };
+            DrawTriangle(p1, p2, p3, col);
         }
 
         DrawText("color.csv を書き換えると絵が変わる", 10, 10, 16, LIGHTGRAY);
