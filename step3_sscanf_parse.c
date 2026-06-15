@@ -6,7 +6,7 @@
 
 int main(void) {
     // color.csv の2行目と同じ形式の文字列
-    char line[] = "夕焼け オレンジ,30,90,95,400,300,80";
+    char line[] = "紫の霞,280,60,75,300,450,50";
 
     char  name[64];
     float hue, sat, bri;
@@ -28,4 +28,5 @@ int main(void) {
 }
 
 // 【確認】n は何？ なぜその数になる？
+/*nは7。sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",の"の中が七個だから。*/
 // 【改造】line の中身を変えて、別の色を試してみよう
