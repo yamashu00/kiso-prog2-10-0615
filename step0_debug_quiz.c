@@ -9,34 +9,45 @@
 int main(void) {
     FILE *fp = fopen("color.csv", "r");
 
+    if (fp == NULL) {
+        fprintf(stderr, "1つ目の書き込み用ファイルを開けませんでした\n");
+        return 1;
+    }
+
     char line[256];
     fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
     printf("%s", line);
-
-    fp = NULL;                        // バグ② ファイルを閉じていない
-
+    
+    fclose(fp);
+    fp = NULL;
+ 
     FILE *fp2 = fopen("log.txt", "w");
-    if (fp2 == NULL) { return 1; }
+
+    if (fp2 == NULL) {
+        fprintf(stderr, "2つ目の書き込み用ファイルを開けませんでした\n");
+        return 1;
+    }                     // バグ② ファイルを閉じていない
 
     fprintf(fp2, "ログ: %s", line);
     fclose(fp2);
+    fp2 = NULL;
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+    if (fp3 == NULL) {
+        fprintf(stderr, "3つ目の書き込み用ファイルを開けませんでした\n");
+        return 1;
+    }
     fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
     fclose(fp3);
 
     return 0;
 }
 
-/*
- * バグの答えはここに書く（スペースを開けてから確認すること）
- *
- *
- *
- *
- *
- *
- * ① fopen 直後に NULLチェックがない → fp が NULL のまま fgets を呼ぶとクラッシュ
+/*バグの答えはここに書く（スペースを開けてから確認すること）*/
+
+
+
+ /* ① fopen 直後に NULLチェックがない → fp が NULL のまま fgets を呼ぶとクラッシュ
  *    修正: if (fp == NULL) { fprintf(stderr, "開けません\n"); return 1; }
  *
  * ② fclose を呼ばずに fp = NULL している → ファイルが正しく閉じられない
