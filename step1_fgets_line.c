@@ -22,3 +22,5 @@ int main(void) {
 }
 
 // 【確認】実行するとどの行が出る？ なぜ1行しか出ない？
+// color.csvの上から一行目。
+// fgets(line, sizeof(line), fp);を1回しか呼び出していないため。
