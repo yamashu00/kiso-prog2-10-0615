@@ -13,10 +13,15 @@ int main(void) {
 
     char line[256];
 
+    int count = 0; //カウンター用の変数
+
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
         printf("%s", line);
+        count++; //１つカウントする
     }
+
+    printf("全部で %d 行\n", count);
 
     fclose(fp);
     fp = NULL;
@@ -24,4 +29,5 @@ int main(void) {
 }
 
 // 【確認】step1 と比べて何が変わった？
+//  →１行目より後も読めてる
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
