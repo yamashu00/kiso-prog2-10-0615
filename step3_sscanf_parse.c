@@ -6,15 +6,14 @@
 
 int main(void) {
     // color.csv の2行目と同じ形式の文字列
-    char line[] = "夕焼け オレンジ,30,90,95,400,300,80";
+    char line[] = "夕焼け ピンク,10,30,95,410,300,80";
 
     char  name[64];
     float hue, sat, bri;
     int   cx, cy, r;
 
     // %63[^,] = カンマ以外の文字を最大63文字読む（スペースも読める）
-    int n = sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d",
-                   name, &hue, &sat, &bri, &cx, &cy, &r);
+    int n = sscanf(line, "%63[^,],%f,%f,%f,%d,%d,%d", name, &hue, &sat, &bri, &cx, &cy, &r);
 
     printf("読めた変数の数: %d\n", n);
     printf("名前: %s\n",       name);
