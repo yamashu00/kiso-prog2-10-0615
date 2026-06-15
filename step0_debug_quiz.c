@@ -31,17 +31,26 @@ int main(void) {
 /*
  * バグの答えはここに書く（スペースを開けてから確認すること）
  *
- *
- *
- *
- *
- *
  * ① fopen 直後に NULLチェックがない → fp が NULL のまま fgets を呼ぶとクラッシュ
  *    修正: if (fp == NULL) { fprintf(stderr, "開けません\n"); return 1; }
- *
+ * 
+ *FILE *fp = fopen("color.csv", "r");
+if (fp == NULL) {
+    fprintf(stderr, "color.csv を開けません\n");
+    return 1;
+}
  * ② fclose を呼ばずに fp = NULL している → ファイルが正しく閉じられない
  *    修正: fclose(fp); の後に fp = NULL;
- *
+ * 
+ *fclose(fp);
+fp = NULL;
+ * 
  * ③ fp3 の NULLチェックがない → 存在しないディレクトリへの書き込みでクラッシュ
  *    修正: if (fp3 == NULL) { fprintf(stderr, "開けません\n"); return 1; }
+ * 
+ * FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+if (fp3 == NULL) {
+    fprintf(stderr, "out.csv を開けません\n");
+    return 1;
+}
  */

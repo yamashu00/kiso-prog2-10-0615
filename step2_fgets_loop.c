@@ -18,10 +18,42 @@ int main(void) {
         printf("%s", line);
     }
 
+
+    int count = 0;
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("%s", line);
+        count++;
+    }
+    printf("全部で %d 行\n", count);
+ 
+
     fclose(fp);
     fp = NULL;
     return 0;
 }
 
 // 【確認】step1 と比べて何が変わった？
+/*
+ * whileループを使ってfgetsを繰り返し呼び出すことで、ファイルの全行を読み込むようになった。
+ * fgetsがNULLを返すまでループが続くため、ファイルの終わりまで全ての行が表示される。
+ *
+ * 例:
+ * while (fgets(line, sizeof(line), fp) != NULL) {
+ *     printf("%s", line);
+ * }
+ *
+ */
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
+/*
+ * 行数を数えるための変数を用意し、whileループ内で行が読み込まれるたびにカウントアップする。
+ * ループが終わった後に、カウントした行数を表示する。
+ *
+ * 例:
+ * int count = 0;
+ * while (fgets(line, sizeof(line), fp) != NULL) {
+ *     printf("%s", line);
+ *     count++;
+ * }
+ * printf("全部で %d 行\n", count);
+ *
+ */
