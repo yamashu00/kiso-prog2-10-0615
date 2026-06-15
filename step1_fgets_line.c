@@ -7,7 +7,7 @@
 int main(void) {
     FILE *fp = fopen("color.csv", "r");
     if (fp == NULL) {
-        fprintf(stderr, "ファイルを開けませんでした\n");
+        fprintf(stderr, "ファイルを開けませんでした\n");//こう書くとエラー文として出せる
         return 1;
     }
 
@@ -22,3 +22,4 @@ int main(void) {
 }
 
 // 【確認】実行するとどの行が出る？ なぜ1行しか出ない？
+//2行出させたければfgets→printfのくだりをそのままもっかいコピペする
