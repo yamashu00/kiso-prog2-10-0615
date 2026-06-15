@@ -1,5 +1,5 @@
 // step5: color.csv を読んで raylib で円を描く（完成版）
-// コンパイル: gcc step5_color_draw.c -o step5 -lraylib -lm
+// コンパイル: gcc step5_color_draw.c -o step5 -I/opt/homebrew/include -L/opt/homebrew/lib -lraylib -lm
 // 実行:       ./step5
 
 #include <stdio.h>

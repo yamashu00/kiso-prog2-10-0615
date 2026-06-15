@@ -6,7 +6,7 @@
 
 int main(void) {
     // color.csv の2行目と同じ形式の文字列
-    char line[] = "夕焼け オレンジ,30,90,95,400,300,80";
+    char line[] = "薄い桃色,350,50,98,500,150,30";
 
     char  name[64];
     float hue, sat, bri;
