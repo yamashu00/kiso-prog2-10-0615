@@ -6,7 +6,7 @@
 
 int main(void) {
     // color.csv の2行目と同じ形式の文字列
-    char line[] = "夕焼け オレンジ,30,90,95,400,300,80";
+    char line[] = "海の青,240,100,80,500,200,50";
 
     char  name[64];
     float hue, sat, bri;
@@ -28,4 +28,6 @@ int main(void) {
 }
 
 // 【確認】n は何？ なぜその数になる？
+// 【答え】n は sscanf が読み込めた変数の数である。
+//  今回は name、hue、sat、bri、cx、cy、r の7個を正しく読み込めたため、n は 7 になる。
 // 【改造】line の中身を変えて、別の色を試してみよう

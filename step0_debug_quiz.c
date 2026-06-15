@@ -9,21 +9,38 @@
 int main(void) {
     FILE *fp = fopen("color.csv", "r");
 
+    if (fp == NULL) {
+        fprintf(stderr, "color.csvを開けませんでした\n");
+        return 1;
+    }
+
     char line[256];
     fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
     printf("%s", line);
 
+    fclose(fp);
     fp = NULL;                        // バグ② ファイルを閉じていない
 
     FILE *fp2 = fopen("log.txt", "w");
-    if (fp2 == NULL) { return 1; }
+    if (fp2 == NULL) {
+        fprintf(stderr, "log.txtを開けませんでした\n");
+        return 1;
+    }
 
     fprintf(fp2, "ログ: %s", line);
     fclose(fp2);
+    fp2 = NULL;
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
+
+    if (fp3 == NULL) {
+        fprintf(stderr, "out.csvを開けませんでした\n");
+        return 1;
+    }
+
     fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
     fclose(fp3);
+    fp3 = NULL;
 
     return 0;
 }
