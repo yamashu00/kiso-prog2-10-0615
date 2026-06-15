@@ -16,12 +16,15 @@ int main(void) {
     // fgets が NULL を返したらファイルの終わり
     while (fgets(line, sizeof(line), fp) != NULL) {
         printf("%s", line);
+        count++;
     }
-
+    printf("\n全部で %d 行\n", count);
+    
     fclose(fp);
     fp = NULL;
     return 0;
 }
 
 // 【確認】step1 と比べて何が変わった？
+*ファイル全体が表示されるようになった。
 // 【改造】行数を数えて最後に「全部で X 行」と表示してみよう
