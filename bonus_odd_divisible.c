@@ -36,7 +36,12 @@
 
 int main(void) {
 
-    /* ここに実装する */
+    int num;
+    for(int a = 0; a < 9999; a++){
+        if(a % 625 == 0 && a-1 % 16 == 0){
+            printf("%d\n", a);
+        }
+    }
 
     return 0;
 }
