@@ -10,10 +10,15 @@ int main(void) {
     FILE *fp = fopen("color.csv", "r");
 
     char line[256];
-    fgets(line, sizeof(line), fp);   // バグ① fopen が失敗していたら？
+    fgets(line, sizeof(line), fp);   
+    if(fp == NULL){
+        fprintf (stderr, "ファイルが開けません\n");
+        return 1;
+    }
     printf("%s", line);
 
-    fp = NULL;                        // バグ② ファイルを閉じていない
+    fp = NULL;
+    fclose(fp);
 
     FILE *fp2 = fopen("log.txt", "w");
     if (fp2 == NULL) { return 1; }
@@ -22,7 +27,12 @@ int main(void) {
     fclose(fp2);
 
     FILE *fp3 = fopen("no_such_dir/out.csv", "w");
-    fprintf(fp3, "data\n");          // バグ③ fp3 が NULL かもしれない
+    fprintf(fp3, "data\n");
+    if (fp3 == NULL){
+        fprintf (stderr, "ファイルが開けません\n");
+        return 1;
+    }
+    
     fclose(fp3);
 
     return 0;
